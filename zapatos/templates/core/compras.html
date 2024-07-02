@@ -43,6 +43,8 @@
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">{{user.username|upper}}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a class="dropdown-item" href="{% url "agregar_datos" %}">Agregar Datos</a></li>
+                          <li><a class="dropdown-item" href="{% url "ver_dat" %}">Ver datos</a></li>
                           <li><a class="dropdown-item" href="{% url "salir" %}">Cerrar Sesion</a></li>
                         </ul>
                         {% else %}

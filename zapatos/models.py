@@ -9,8 +9,6 @@ class Usuario(models.Model):
     fecha_nacimiento = models.DateField(blank=False,null=False)
     telefono = models.CharField(max_length=45)
     email = models.EmailField(unique=True,max_length=100,blank=True,null=True)
-    password1= models.CharField(max_length=45,blank=False,null=False)
-    password2= models.CharField(max_length=45,blank=False,null=False)
     direccion = models.CharField(max_length=100,blank=True,null=True)
     activo = models.IntegerField()
 

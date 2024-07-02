@@ -44,7 +44,7 @@
                     <li><a class="dropdown-item" href="{% url "salir" %}">Cerrar Sesion</a></li>
                   </ul>
                   {% else %}
-                <a class="nav-link " aria-current="page" href={% url "login" %}> Iniciar Sesion</a>
+                <a class="nav-link " aria-current="page" href={% url "iniciar_sesion" %}> Iniciar Sesion</a>
                   {% endif %}
                 </li>
               </ul>
@@ -58,13 +58,10 @@
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="10000">
-            <a href="./zapatos/FlyknitOne.html"><img src="{% static 'img/346655-admin_1920x1080.jpg' %}" alt="My image./assets/img/346655-admin_1920x1080.jpg" class="d-block w-100" alt="fire force"></a>
+            <a href={% url "proximo" %}><img src="https://www.radiomoratalaz.org/wp-content/uploads/2018/09/Pr%C3%B3ximamente.png" alt="zapatos hombres" class="d-block w-100" alt="fire force"></a>
           </div>
           <div class="carousel-item" data-bs-interval="2000">
-            <a href="./zapatos/TerrexFreeHiker.html"><img src={% static "img/zapa2.webp" %} class="d-block w-100" alt="Ninja Kamui"></a>
-          </div>
-          <div class="carousel-item">
-            <a href="./zapatos/AirJordan.html"><img src={% static "img/zapatillas_jordan_retro.webp" %} class="d-block w-100" alt="jujutsu"></a>
+            <a href=https://www.youtube.com/watch?v=xvFZjo5PgG0><img src="https://media.revistaad.es/photos/62b1a76b0b5dcc62304c77fc/16:9/w_2560%2Cc_limit/DSC01402.JPG" class="d-block w-100" alt="zapatos mujeres"></a>
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">

@@ -89,6 +89,7 @@ def agregar_datos(request):
         context = { "mensaje": "Sus datos han sido agregados" }
         return render(request,"core/index.html",context)
 
+
 def actualizar_datos(request):
     if request.method == "POST":
         rut = request.POST["rut"]
@@ -105,7 +106,6 @@ def actualizar_datos(request):
         usuario.nombre = nombre
         usuario.apellido = apellido
         usuario.fecha_nacimiento = fechaNac
-
         usuario.telefono = telefono
         usuario.email = email
         usuario.direccion = direccion
@@ -117,7 +117,36 @@ def actualizar_datos(request):
     else:
         usuarios = Usuario.objects.all
         context = {"usuarios":usuarios}
-        return render(request,"registration/ver_datos.html",context)            
+        return render(request,"registration/ver_datos.html",context) 
+
+def borrar_datos(request,pk):
+    context= {}
+    try:
+        usuario = Usuario.objects.get(rut=pk)
+        usuario.delete()
+
+        mensaje = "datos eliminado"
+        usuarios = Usuario.objects.all()
+        context = {"usuarios":usuarios,"mensaje":mensaje}
+        return render(request,"registration/ver_datos.html",context)
+    except:
+        mensaje = "Error al eliminar"
+        usuarios = Usuario.objects.all()
+        context = {"usuarios":usuario,"mensaje":mensaje}
+        return render(request,"registration/ver_datos.html",context)           
+
+def usuarios_findEdit(request,pk):
+    
+    if pk != "":
+        usuario = Usuario.objects.get(rut=pk)
+
+        context = {"usuario":usuario}
+
+        if usuario:
+            return render(request,"registration/act_datos.html",context)
+        else:
+            context = {"mensaje":"Error , el rut no existe"}
+            return render(request,"registration/ver_datos.html",context)
 
 
 def iniciar_sesion(request):

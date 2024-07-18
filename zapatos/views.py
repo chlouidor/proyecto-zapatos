@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from zapatos.models import Usuario
+from zapatos.models import Usuario,Zapato
 from django.contrib import messages
 from django.contrib.auth.forms import  AuthenticationForm
 from django.db import IntegrityError
@@ -171,7 +171,10 @@ def iniciar_sesion(request):
     return render(request, "registration/login.html", {"form": form})
 
 def proximo(request):
-    return render(request,'zap/proximos.html')
+    zapatos=Zapato.objects.all()
+    return render(request,'zap/proximos.html',{
+        'zapatos':zapatos
+    })
 
 def nosotros(request):
     return render(request,'core/nosotros.html')
@@ -183,4 +186,83 @@ def salir(request):
     logout (request)
     return redirect('inicio')
 
+def lista_zapatos(request):
+    zapatos=Zapato.objects.all()
+    return render(request,'zap/lista_zapatos.html',{
+        'zapatos':zapatos
+    })
 
+def agregar_zapatos(request):
+    if request.method != "POST":
+        return render(request,"zap/agregar_zapatos.html")
+    else:
+
+        id = request.POST["id"]
+        nombre = request.POST["nombre"]
+        precio = request.POST["precio"]
+        imagen = request.POST["imagen"]
+        activo = "1"
+
+        obj = Zapato.objects.create(
+            id = id,
+            nombre = nombre,
+            precio = precio,
+            imagen = imagen,
+            activo=1
+        )
+        obj.save()
+        context = { "mensaje": "Zapatillas agregadas" }
+        return render(request,"zap/agregar_zapatos.html",context)
+    
+def editar_zapatos(request):
+    if request.method == "POST":
+        id = request.POST["id"]
+        nombre = request.POST["nombre"]
+        precio = request.POST["precio"]
+        imagen = request.POST["imagen"]
+
+
+        zapato = Zapato()
+        zapato.id = id
+        zapato.nombre = nombre
+        zapato.precio = precio
+        zapato.imagen = imagen
+        zapato.activo = 1
+
+        zapato.save()
+        context = {"mensaje":"Zapatos editados satisfactoriamente","zapato":zapato}
+        return render(request,"zap/editar_zapatos.html",context)
+    else:
+        zapatos = Zapato.objects.all
+        context = {"zapatos":zapatos}
+        return render(request,"zap/lista_zapatos.html",context) 
+
+
+def borrar_zapatos(request,pk):
+    context= {}
+    try:
+        zapato = Zapato.objects.get(id=pk)
+        zapato.delete()
+
+        mensaje = "zapato eliminado"
+        zapatos = Zapato.objects.all()
+        context = {"zapatos":zapatos,"mensaje":mensaje}
+        return render(request,"zap/lista_zapatos.html",context)
+    except:
+        mensaje = "Error al eliminar"
+        zapatos = Zapato.objects.all()
+        context = {"zapatos":zapato,"mensaje":mensaje}
+        return render(request,"zap/lista_zapatos.html",context)           
+
+def zapatos_findEdit(request,pk):
+    
+    if pk != "":
+        zapato = Zapato.objects.get(id=pk)
+
+        context = {"zapato":zapato}
+
+        if zapato:
+            return render(request,"zap/editar_zapatos.html",context)
+        else:
+            context = {"mensaje":"Error , el id no existe"}
+            return render(request,"zap/lista_zapatos.html",context)

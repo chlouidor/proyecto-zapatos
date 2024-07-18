@@ -133,3 +133,8 @@ STATICFILES_DIRS = [BASE_DIR/ 'static']
 
 MEDIA_URL='media/'
 NEDIA_ROOT = BASE_DIR/ 'media'
+
+
+import os
+MEDIA_URL='media/'
+NEDIA_ROOT = os.path.join(BASE_DIR, "media")

@@ -18,3 +18,17 @@ class Usuario(models.Model):
     class Meta:
         ordering=['rut']
 
+
+class Zapato(models.Model):
+    id = models.CharField(primary_key=True,max_length=4)
+    nombre = models.CharField(max_length=50)
+    precio = models.CharField(max_length=45)
+    imagen = models.ImageField( upload_to="zapatos_nuevos", null=True )
+    activo = models.IntegerField()
+
+    def __str__(self):
+        return str(self.nombre) + " " + str(self.precio)
+
+    class Meta:
+        ordering=['id']
+

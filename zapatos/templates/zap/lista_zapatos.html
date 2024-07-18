@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Zapatos</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        main {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+            background-color: #28292891;
+            padding: 20px;
+        }
+
+        button a {
+            text-decoration: none;
+            color: rgb(3, 3, 3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #7c6f839d;
+            color: white;
+        }
+
+        th, td {
+            border: 1px solid #050505;
+            background-color: gray;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #000000;
+        }
+
+        .mensaje {
+            text-align: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #303b46;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        
+        <div id="idMensajes" class="mensaje">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+        </div>
+        
+        <table>
+            {% if zapatos %}
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Eliminar</th>
+                        <th>Modificar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for zapato in zapatos %}
+                        <tr>
+                            <td>{{ zapato.id }}</td>
+                            <td>{{ zapato.nombre }}</td>
+                            <td>{{ zapato.precio }}</td>
+                            <td><a href="{% url 'borrar_zapatos' pk=zapato.id %}">Eliminar</a></td>
+                            <td><a href="{% url 'zapatos_findEdit' pk=zapato.id %}">Modificar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% else %}
+                <tr>
+                    <td colspan="5">No hay zapatos disponibles</td>
+                </tr>
+            {% endif %}
+        </table>
+        <br>
+        <button type="button">
+            <a href="{% url 'agregar_zapatos' %}">Agregar</a>
+        </button>
+    </main>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#idMensajes").delay(2000).fadeOut("slow");
+        });
+    </script>
+</body>
+</html>
